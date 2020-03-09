@@ -32,6 +32,23 @@ render(<>
 </>)
 ```
 
+there is a shorter way:
+
+```jsx
+const Button = styled.button`
+  padding: 10px;
+  margin: 10px;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #EEE;
+`;
+
+const BlueButton = styled.(Button)`
+  background: #2B00D7;
+  color: #FFF;
+`
+```
 ---
 
 ## Exercise
