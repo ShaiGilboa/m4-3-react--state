@@ -45,16 +45,16 @@ const List = ({list, handleSelect, term, categories, arrowInputIndex, setArrowIn
 }
 
 const Typehead = ({books, categories, handleSelect }) => {
+    const [input, setInput] = useState('')
+    const [list, setList] = useState([])
+    const [arrowInputIndex, setArrowInputIndex] = useState(0)
+
     const handleFilter = (suggestion) => {
         suggestion=suggestion.toLowerCase()
         const results = books.filter(book => book.title.toLowerCase().includes(suggestion))
         return(results);            
     }
     
-    const [input, setInput] = useState('')
-    const [list, setList] = useState([])
-    const [arrowInputIndex, setArrowInputIndex] = useState(0)
-
     const clearInput = (val) => {
         setInput('');
         setList([]);
