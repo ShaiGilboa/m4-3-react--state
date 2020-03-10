@@ -12,6 +12,7 @@ const StyledLi = styled.li`
     &:hover{
         background: gold;
         color: white;
+        cursor: pointer;
     }
 `;
 
@@ -35,7 +36,7 @@ const genre = (categoryId, categories) => {
 const List = ({list, handleSelect, term, categories, arrowInputIndex, setArrowInputIndex}) => {
     if (list.length) {
     return(
-        <ul style={{position: 'absolute', margin: '2px 0 0 0', padding:'2px 0', width:'300px', boxShadow: '5px 10px 10px #8D8D92'}}>
+        <ul style={{position: 'absolute', margin: '2px 0 0 0', padding:'2px 0', width:'300px', boxShadow: '0px 10px 10px #8D8D92'}}>
             {list.map((thing, index)=><StyledLi key={thing.title} onClick={()=>handleSelect(thing.title)} style={arrowInputIndex===index?{background: 'red',color: 'white'}: {}} onMouseEnter={()=>setArrowInputIndex(index)}>{divideString(thing.title, term)} {genre(thing.categoryId, categories)}</StyledLi>
             )}
         </ul>
@@ -47,9 +48,9 @@ const Typehead = ({books, categories, handleSelect }) => {
     const handleFilter = (suggestion) => {
         suggestion=suggestion.toLowerCase()
         const results = books.filter(book => book.title.toLowerCase().includes(suggestion))
-        return(results)
-                
+        return(results);            
     }
+    
     const [input, setInput] = useState('')
     const [list, setList] = useState([])
     const [arrowInputIndex, setArrowInputIndex] = useState(0)
@@ -77,6 +78,8 @@ const Typehead = ({books, categories, handleSelect }) => {
                         break;
                     case 'Escape':
                         clearInput()
+                        break;
+                    default:
                         break;
                 };
                 }
