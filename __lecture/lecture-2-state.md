@@ -12,7 +12,7 @@ State is _dynamic data_. Things that change.
 
 ```jsx live=true
 const Counter = () => {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = React.useState(0); // in the brackets: initial value
 
   return (
     <>
@@ -65,6 +65,8 @@ let [value, setValue] = React.useState(null);
 
 value = 10;
 ```
+
+// value will change, but it won't render
 
 ---
 
@@ -246,6 +248,35 @@ const SearchResults = () => {
 }
 ```
 
+```jsx
+const App = () => {
+  const [searchTerm, setSearchTerm] = React.useState('');
+
+  return (
+    <>
+      <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+      <SearchResults searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+    </>
+  )
+}
+
+const SearchInput = ({searchTerm, setSearchTerm}) => {
+  return (
+    <input
+      type="text"
+      value={searchTerm}
+      onChange={(ev) => {
+        setSearchTerm(ev.target.value);
+      }}
+    />
+  );
+}
+
+const SearchResults = ({searchTerm}) => {
+  // ??
+}
+```
+
 ---
 
 This is called "lifting state up".
@@ -259,12 +290,10 @@ Lift state up in the following examples
 ---
 
 ```jsx live=true
-const Counter = () => {
-  const [count, setCount] = React.useState(0);
-
+const Counter = ({count, handleCount}) => {
   return (
     <>
-      <button onClick={() => setCount(count + 1)}>
+      <button onClick={() => handleCount(count + 1)}>
         Increment
       </button>
     </>
@@ -272,11 +301,16 @@ const Counter = () => {
 };
 
 const App = () => {
+  const [count, setCount] = React.useState(0);
+
+  const handleCount = (val) => {
+    setCount(val);
+  }
   return (
     <>
-      The current count is: ???
+      <p>The current count is: {count}</p>
 
-      <Counter />
+      <Counter count={count} handleCount={handleCount} />
     </>
   )
 }
@@ -287,9 +321,7 @@ render(<App />)
 ---
 
 ```jsx live=true
-const FavouriteFood = () => {
-  const [food, setFood] = React.useState('');
-
+const FavouriteFood = ({food, handleFood}) => {
   return (
     <>
       <label>
@@ -297,8 +329,7 @@ const FavouriteFood = () => {
           type="radio"
           name="food"
           value="pizza"
-          checked={food === 'pizza'}
-          onChange={() => setFood('pizza')}
+          onChange={() => handleFood('pizza')}
         />
         Pizza
       </label>
@@ -307,8 +338,7 @@ const FavouriteFood = () => {
           type="radio"
           name="food"
           value="broccoli"
-          checked={food === 'broccoli'}
-          onChange={() => setFood('broccoli')}
+          onChange={() => handleFood('broccoli')}
         />
         Broccoli
       </label>
@@ -317,11 +347,14 @@ const FavouriteFood = () => {
 };
 
 const App = () => {
+  const [food, setFood] = React.useState('');
+  const handleFood = (val) => {
+    setFood(val)
+  }
   return (
     <>
-      My favourite food is: ???
-      <br /><br />
-      <FavouriteFood />
+      <p>My favourite food is: {food}</p>
+      <FavouriteFood food={food} handleFood={handleFood}/>
     </>
   )
 }

@@ -100,7 +100,7 @@ class Temperature extends React.Component {
 
 render(<Temperature />)
 ```
-
+37
 ---
 
 
@@ -129,7 +129,7 @@ class Temperature extends React.Component {
 
 render(<Temperature initialT={-10} />)
 ```
-
+27
 ---
 
 After clicking the button **once**.
